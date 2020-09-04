@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ListInformationService } from 'src/app/services/list-information.service';
 import { List } from 'src/app/interfaces/list';
+import data from "../../data.json";
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -11,21 +12,19 @@ export class DashboardComponent implements OnInit {
   completeListData: List[] = [];
   details = [];
 
-  constructor(public service: ListInformationService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.service.getUsers()
-      .subscribe(data => {
-        this.completeListData = Object.assign([], data);;
-        this.renderedList = Object.assign([], this.completeListData);
-      });
+    this.completeListData = Object.assign([], data);;
+    this.renderedList = Object.assign([], this.completeListData);
+
   }
 
   showDetails(selectedItemDetails: any): void {
     this.details = Object.assign([], selectedItemDetails);
   }
 
-  onSearch(value: string): void {
+  searchTable(value: string): void {
     var searchTerms = value.trim();
     var filteredItems = [];
     if (searchTerms === '') {

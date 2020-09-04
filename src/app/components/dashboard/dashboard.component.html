@@ -1,18 +1,5 @@
-<div [ngClass]="'top_bar_main'">
-   <div [ngClass]="'options_bar_div'">
-      <div [ngClass]="'saved_list_div'">
-         <span [ngClass]="'saved_list_span'"><i class='fas fa-ellipsis-v'></i><i class='fas fa-bars'></i>
-            SAVED LIST</span>
-      </div>
-      <span><i class='fas fa-filter'></i> SAVED FILTERS</span>
-      <span><i class='fas fa-undo'></i> SEARCH HISTORY</span>
-   </div>
 
-   <div [ngClass]="'search_div'">
-      <input #search class="search" type="text" placeholder="Search by list name..." (keyup)="onSearch(search.value)">
-   </div>
-</div>
-
+<app-options  (searchEvent)="searchTable($event)"></app-options>
 
 <table>
    <thead>
@@ -29,9 +16,12 @@
       <tr [ngClass]="'table_row'" *ngFor="let l of renderedList">
          <td [ngClass]="'table_column_date'">
             <i *ngIf="l.date.length === 0" class='fas fa-circle-notch'></i>
-            <span *ngIf="l.date.length > 0">{{l.date}}</span>
+            <span *ngIf="l.date.length > 0" >{{l.date}}</span>
          </td>
-         <td [ngClass]="'table_column_name'">{{l.name}}</td>
+         <td [ngClass]="'table_column_name'">
+            <b *ngIf="l.date.length === 0" style="color: lightskyblue;">{{l.name}}</b>
+            <b *ngIf="l.date.length != 0">{{l.name}}</b>
+         </td>
          <td [ngClass]="'table_column_entities'">{{l.total_entities}}</td>
          <td>
             <i class='far fa-envelope'></i>
@@ -44,7 +34,8 @@
    </tbody>
 </table>
 
-<div [ngClass]="'details_bar'">
-   <div [ngClass]="'details_bar_top'"> No description yet <b>+Add Description</b></div>
+
+<div [ngClass]="'details_sidebar'">
+   <div [ngClass]="'details_sidebar_top'"> No description yet <b>+Add Description</b></div>
    <app-details *ngIf="details.length > 0" [selectedItemDetails]="details"></app-details>
 </div>
